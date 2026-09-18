@@ -10,6 +10,18 @@
       skip:'Skip to main content',navigation:'Main navigation',navProjects:'Work',navAbout:'About',navContact:'Contact',heroTitle:'Hi, I’m<br><span class="name-accent">Bingjun</span><span class="blue-period">.</span>',heroDescription:'Finding patterns in data.<br> Building ideas into useful tools.',explore:'Explore my work',heroMini:'Stay curious. Keep building.',greetLabel:'Say hello to Bingjun',avatarAlt:'Cartoon Bingjun in a blue hoodie with silver stud earrings',sayHi:'Click to say hello',atGlance:'ABOUT ME / AT A GLANCE',profileTitle:'A mind for data.<br>A life of curiosity.',profileIntro:'MSc student in Data Science at CUHK-Shenzhen, exploring data mining, machine learning and trustworthy AI applications.',based:'Based in',shenzhen:'Shenzhen, China',graduation:'Graduating',moreAbout:'A little more about me',openRoles:'Exploring data science, data mining & data engineering roles',scroll:'Scroll to explore',projectsTitle:'Starting with questions.<span> Answering through work.</span>',projectsIntro:'Business analytics, machine learning and AI systems.<br>A growing collection of experiments.',aboutTitle:'There’s life beyond the keyboard.',aboutLead:'From understanding the business to building the system.',aboutText:'My background in information management and economics taught me to start with “Why is this problem worth solving?” Through data science, I’m exploring models, data pipelines and application development—with an eye on trustworthy results and traceable evidence.',skillData:'Data & modeling',skillBuild:'Building & exploring',education:'EDUCATION',masterSchool:'The Chinese University of Hong Kong, Shenzhen',masterDegree:'MSc · Data Science',bachelorSchool:'Central University of Finance and Economics',bachelorDegree:'Bachelor’s · Information Management & Information Systems',expectedNote:'* Expected graduation: July 2027',hobbyTitle:'Close the laptop.<br>Hit the court.',hobbyIntro:'A different kind of focus. The same joy.',hobbyButton:'Unlock basketball mode',hobbyFootnote:'A little easter egg about what I love',contactTitle:'A good question?<br><span>Let’s talk.</span>',contactIntro:'Data, AI, a project, or an interesting idea.',copyEmail:'Copy email',footer:'Build with care. Live with curiosity.',backTop:'Back to top ↑',closeProject:'Close project details',closeHobby:'Close basketball easter egg',basketballTitle:'Find me<br>on the court.',basketballText:'Focused on code. Just as focused on basketball. Jersey number 14 is my way to give curiosity a little recess.',cheer:'Cheer for number 14',detailButton:'Project details',demoCard:'Watch full walkthrough',videoTitle:'Project walkthrough · Coming later',videoText:'The system runs on a company intranet. A video will demonstrate its workflow here.',demoPage:'Open full project walkthrough',viewCode:'View GitHub repository',greeting:'Hey! So nice to meet you.',cheered:'Number 14 heard you. On to the next play!',copied:'Email copied',copyFailed:'Select the email above to copy it.',lightTheme:'Switch to light mode',darkTheme:'Switch to dark mode',basketballAlt:'Cartoon Bingjun in a red number 14 basketball jersey, holding a ball and waving',dataUnits:'products covered',clvUnits:'Cox C-index',bankUnits:'best AUC',reasoningUnits:'AMC23 pass@64',motionOn:'Pause avatar animation',motionOff:'Enable avatar animation'
     }
   };
+  Object.assign(strings.zh, {
+    basketballText:'写代码时认真，打篮球也一样。换上 9 号球衣，给好奇心放个课间。',
+    cheer:'给 9 号加油',
+    cheered:'9 号收到！下一球，继续加油。',
+    basketballAlt:'秉君身穿红色 9 号篮球服，抱着篮球挥手'
+  });
+  Object.assign(strings.en, {
+    basketballText:'Focused on code. Just as focused on basketball. Jersey number 9 is my way to give curiosity a little recess.',
+    cheer:'Cheer for number 9',
+    cheered:'Number 9 heard you. On to the next play!',
+    basketballAlt:'Cartoon Bingjun in a red number 9 basketball jersey, holding a ball and waving'
+  });
   const storage = { get(k){try{return localStorage.getItem(k)}catch{return null}}, set(k,v){try{localStorage.setItem(k,v)}catch{}} };
   let lang = storage.get('bj-language') === 'en' ? 'en' : 'zh';
   let activeProject = null;
@@ -88,7 +100,7 @@
     dialog.addEventListener('close',()=>{document.body.classList.remove('modal-open');dialog.querySelector('video')?.pause();});
   }
   $('#basketball-button').addEventListener('click',()=>{
-    if(!$('#basketball-art img')) $('#basketball-art').innerHTML=`<img src="assets/basketball.webp" width="1024" height="1536" alt="${escape(t('basketballAlt'))}">`;
+    if(!$('#basketball-art img')) $('#basketball-art').innerHTML=`<img src="assets/basketball.webp?v=20260918-jersey-9" width="1024" height="1536" alt="${escape(t('basketballAlt'))}">`;
     $('#cheer-status').textContent='';hobbyDialog.showModal();document.body.classList.add('modal-open');
   });
   $('#basketball-cheer').addEventListener('click',()=>{hobbyDialog.classList.remove('is-cheering');void hobbyDialog.offsetWidth;hobbyDialog.classList.add('is-cheering');$('#cheer-status').textContent=t('cheered');});
