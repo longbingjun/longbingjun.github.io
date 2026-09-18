@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="竞品 BOM 与供应链情报分析系统演示：产品研究、器件寻源、供应商能力与品牌供应链。">
+  <meta name="theme-color" content="#f7f9fc">
+  <title>竞品 BOM 与供应链情报分析系统｜项目演示</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('bj-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){}</script>
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+  <a class="skip-link" href="#demo-main">跳至演示内容</a>
+  <header class="demo-header">
+    <a class="back-link" href="../../index.html#projects"><span aria-hidden="true">←</span><span>返回作品集</span></a>
+    <div class="demo-wordmark"><span class="brand-mark">b<span>●</span></span><span><strong>Bingjun Long</strong><small>PROJECT WALKTHROUGH</small></span></div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深色模式">◐</button>
+  </header>
+
+  <main id="demo-main">
+    <section class="demo-hero page-shell">
+      <div class="hero-copy">
+        <p class="eyebrow">INTERNSHIP PRACTICE / AI SYSTEM</p>
+        <h1>让竞品情报，<br><span>有据可查。</span></h1>
+        <p class="hero-summary">将公开拆解报告与视频转化为可检索、可比较、可追溯的产品 BOM 与供应链情报。</p>
+        <div class="hero-tags"><span>产品研究</span><span>器件寻源</span><span>供应商能力</span><span>品牌供应链</span></div>
+      </div>
+      <aside class="hero-meta" aria-label="演示信息">
+        <div><span>演示时长</span><strong>约 6 分钟</strong></div>
+        <div><span>章节</span><strong>12 个任务场景</strong></div>
+        <div><span>语言</span><strong>中文 / English</strong></div>
+        <div><span>中文配音</span><strong>晓晓 · +12%</strong></div>
+      </aside>
+    </section>
+
+    <section class="player-section page-shell" aria-labelledby="walkthrough-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">01 / INTERACTIVE WALKTHROUGH</p><h2 id="walkthrough-title">完整功能演示</h2></div>
+        <p>同一套真实操作流程，分别按中英文旁白节奏录制，并可通过章节快速定位功能。</p>
+      </div>
+
+      <div class="player-grid">
+        <div class="player-card">
+          <div class="player-topbar">
+            <div class="language-switch" role="group" aria-label="旁白语言">
+              <button type="button" class="is-active" data-language="zh" aria-pressed="true"><span>中文配音</span><small>晓晓</small></button>
+              <button type="button" data-language="en" aria-pressed="false"><span>English narration</span><small>Jenny</small></button>
+            </div>
+            <span class="caption-state" id="caption-state">中英双语字幕 · 已内嵌</span>
+          </div>
+          <div class="video-shell">
+            <video id="walkthrough-video" controls preload="metadata" playsinline poster="../../assets/competitive-demo-poster.webp">
+              <source id="walkthrough-source" src="../../assets/competitive-demo-zh.mp4?v=20260917-v3" type="video/mp4">
+              当前浏览器不支持视频播放。
+            </video>
+          </div>
+          <p class="sync-note">中文使用晓晓配音，英文使用 Jenny 配音；双语字幕已烧录进画面，切换语言会保留当前播放位置。</p>
+        </div>
+
+        <aside class="chapter-panel" aria-labelledby="chapter-title">
+          <div class="chapter-heading"><div><p class="eyebrow">CHAPTERS</p><h3 id="chapter-title">演示目录</h3></div><span>06:00</span></div>
+          <ol id="chapter-list">
+            <li class="is-current"><button type="button"><span class="chapter-index">01</span><span><strong>开场与项目价值</strong><small>00:00 · 首页</small></span></button></li>
+            <li><button type="button"><span class="chapter-index">02</span><span><strong>任务型用户指引</strong><small>00:27 · User Guide</small></span></button></li>
+            <li><button type="button"><span class="chapter-index">03</span><span><strong>产品工作台</strong><small>01:07 · 动态筛选</small></span></button></li>
+            <li><button type="button"><span class="chapter-index">04</span><span><strong>产品档案与 BOM</strong><small>01:32 · 图片与原文证据</small></span></button></li>
+            <li><button type="button"><span class="chapter-index">05</span><span><strong>多产品对比</strong><small>02:05 · 同类 / 跨品类</small></span></button></li>
+            <li><button type="button"><span class="chapter-index">06</span><span><strong>按器件寻找供应商</strong><small>02:32 · 采购与图片证据</small></span></button></li>
+            <li><button type="button"><span class="chapter-index">07</span><span><strong>按供应商看能力</strong><small>03:07 · 树形下钻</small></span></button></li>
+            <li><button type="button"><span class="chapter-index">08</span><span><strong>品牌供应链</strong><small>03:42 · 演变与图片证据</small></span></button></li>
+            <li><button type="button"><span class="chapter-index">09</span><span><strong>情报明细与来源</strong><small>04:12 · 报告 / 视频</small></span></button></li>
+            <li><button type="button"><span class="chapter-index">10</span><span><strong>最新产品与年度观察</strong><small>04:38 · 样本边界</small></span></button></li>
+            <li><button type="button"><span class="chapter-index">11</span><span><strong>信息加工与追溯</strong><small>05:01 · 证据链</small></span></button></li>
+            <li><button type="button"><span class="chapter-index">12</span><span><strong>项目总结</strong><small>05:37 · 价值回顾</small></span></button></li>
+          </ol>
+          <p class="chapter-note">点击章节可直接跳转到对应功能；播放时目录会自动跟随。</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="page-shell detail-section" aria-labelledby="project-context-title">
+      <div class="section-heading compact"><div><p class="eyebrow">02 / PROJECT CONTEXT</p><h2 id="project-context-title">这个项目解决什么问题？</h2></div></div>
+      <div class="context-grid">
+        <article><span class="card-number">01</span><h3>信息分散</h3><p>公开拆解信息分布在长图文和视频中，人工检索和跨产品核对成本较高。</p></article>
+        <article><span class="card-number">02</span><h3>结构化加工</h3><p>将产品、器件、型号、供应商和证据组织为可查询的数据关系。</p></article>
+        <article><span class="card-number">03</span><h3>采购研究</h3><p>从器件、供应商和品牌三个视角支持竞品分析与替代料线索发现。</p></article>
+        <article><span class="card-number">04</span><h3>证据可追溯</h3><p>保留原始报告、视频、文字片段和图片，避免只展示无法核验的模型结论。</p></article>
+      </div>
+    </section>
+
+    <section class="page-shell bilingual-section" aria-labelledby="bilingual-title">
+      <div class="bilingual-copy"><p class="eyebrow">03 / BILINGUAL DELIVERY</p><h2 id="bilingual-title">一套操作，两种语言。</h2><p>中英文版本遵循相同操作流程，并分别按照各自旁白的真实句子时间录制画面与字幕。切换语言时保留播放进度，方便中文介绍与英文展示。</p></div>
+      <div class="media-stack" aria-label="双语视频结构"><div class="media-layer primary-layer"><span>FLOW</span><strong>同一套真实操作流程</strong></div><div class="media-branches"><div><span>ZH</span><strong>晓晓配音与中文时间轴</strong><small>中英双语字幕已内嵌</small></div><div><span>EN</span><strong>Jenny narration timeline</strong><small>Bilingual captions embedded</small></div></div></div>
+    </section>
+
+    <section class="page-shell role-section" aria-labelledby="role-title">
+      <div><p class="eyebrow">04 / MY ROLE</p><h2 id="role-title">从需求理解，到可用系统。</h2></div>
+      <div class="role-list"><span>需求分析</span><span>数据建模</span><span>信息抽取</span><span>全栈开发</span><span>交互设计</span><span>部署协作</span></div>
+      <p>演示基于公开拆解数据在本地环境重建，不展示公司内部凭证、配置或非公开信息。</p>
+    </section>
+  </main>
+
+  <footer class="demo-footer page-shell"><span>© 2026 Bingjun Long</span><a href="../../index.html#projects">返回项目列表 ↑</a></footer>
+  <script src="demo.js"></script>
+</body>
+</html>
