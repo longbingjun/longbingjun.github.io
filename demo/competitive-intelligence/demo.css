@@ -5,3 +5,20 @@
 @media(max-width:1000px){.page-shell{padding-inline:30px}.demo-header{padding-inline:30px}.demo-hero{grid-template-columns:1fr;gap:25px;padding-top:70px;padding-bottom:70px}.hero-meta{display:grid;grid-template-columns:1fr 1fr}.hero-meta div:nth-child(3){border-bottom:0}.player-grid{grid-template-columns:1fr}.chapter-panel{max-height:none}.context-grid{grid-template-columns:1fr 1fr}.bilingual-section{grid-template-columns:1fr;gap:35px}.role-section{margin-inline:30px}.chapter-panel ol{grid-template-columns:1fr 1fr}}
 @media(max-width:680px){.page-shell{padding-inline:20px}.demo-header{height:72px;padding:0 20px;grid-template-columns:1fr auto}.demo-wordmark{display:none}.hero-copy h1{font-size:47px;letter-spacing:-2.5px}.hero-summary{font-size:15px}.hero-meta{grid-template-columns:1fr;padding:8px 19px}.hero-meta div:nth-child(3){border-bottom:1px solid var(--line)}.section-heading{display:block}.section-heading h2{font-size:30px}.section-heading>p{text-align:left;margin-top:12px}.prototype-notice{align-items:flex-start}.player-topbar{display:block}.caption-state{display:block;margin:9px 3px 0}.language-switch button{padding:8px 10px}.language-switch small{display:none}.voice-preview{grid-template-columns:1fr}.chapter-panel ol{grid-template-columns:1fr}.context-grid{grid-template-columns:1fr}.context-grid article{min-height:170px}.context-grid h3{margin-top:25px}.bilingual-copy h2{font-size:34px}.media-branches{grid-template-columns:1fr}.role-section{margin-inline:20px;grid-template-columns:1fr;padding:35px 25px}.role-list{justify-content:flex-start;margin-top:24px}.demo-footer{flex-wrap:wrap;gap:12px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Typography: prioritize the walkthrough and its chapter controls. */
+.hero-copy h1 { font-size: 56px; letter-spacing: 0; }
+.section-heading h2, .bilingual-copy h2, .context-grid h3 { letter-spacing: 0; }
+.hero-meta span { font-size: 14px; }
+.hero-meta strong { font-size: 14px; }
+.chapter-panel strong { font-size: 15px; }
+.chapter-panel small, .chapter-note, .chapter-index { font-size: 13px; }
+.caption-state, .sync-note, .voice-preview span { font-size: 13px; }
+.language-switch button { font-size: 14px; }
+.language-switch small { font-size: 13px; }
+.player-topbar { flex-wrap: wrap; }
+.context-grid p { font-size: 16px; line-height: 1.8; }
+.media-branches small, .role-section > p { font-size: 13px; }
+@media (max-width: 680px) {
+  .hero-copy h1 { font-size: 36px; letter-spacing: 0; }
+}

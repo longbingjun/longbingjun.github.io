@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light" class="reading-document">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Excel → AI 数据清洗仍需避免制造新形式的“数据债务”｜龙秉君 Bingjun Long</title>
+  <meta name="description" content="代码能够运行、处理过程能够复现，以及业务结果正确，并不是同一件事。从数据加工实践出发，思考项目分级、工程规范与组织协作。">
+  <meta name="theme-color" content="#f7f9fc">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Excel → AI 数据清洗仍需避免制造新形式的“数据债务”">
+  <meta property="og:description" content="代码能够运行、处理过程能够复现，以及业务结果正确，并不是同一件事。从数据加工实践出发，思考项目分级、工程规范与组织协作。">
+  <meta property="og:url" content="https://longbingjun.github.io/writing/ai-data-debt/">
+  <meta property="og:locale" content="zh_CN">
+  <link rel="canonical" href="https://longbingjun.github.io/writing/ai-data-debt/">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%233753ee'/%3E%3Ctext x='15' y='47' font-family='Arial' font-weight='bold' font-size='43' fill='white'%3Eb%3C/text%3E%3C/svg%3E">
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('bj-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){}</script>
+  <link rel="stylesheet" href="../../style.css?v=20260928-typography">
+  <link rel="stylesheet" href="../../writing.css?v=20260928-typography">
+  <script src="../../writing.js?v=20260928" defer></script>
+</head>
+<body class="writing-page" id="top">
+<a class="skip-link" href="#main">跳至主要内容</a>
+<header class="site-header">
+  <a class="wordmark" href="../../" aria-label="Bingjun Long 首页"><span class="brand-symbol">b<span>●</span></span><span>Bingjun Long<span class="wordmark-sub">DATA & A LITTLE CURIOSITY</span></span></a>
+  <nav aria-label="主要导航"><a href="../../#projects">项目</a><a href="../../writing/" aria-current="page">实践与思考</a><a href="../../#about">关于我</a><a href="../../#contact">联系</a></nav>
+  <div class="header-controls"><a class="writing-home" href="../../">首页</a><button id="theme-toggle" class="icon-control" type="button" aria-label="切换深色模式"><svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.1A8.5 8.5 0 0 1 9.9 4 8.5 8.5 0 1 0 20 14.1Z"/></svg><svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button></div>
+</header>
+<div class="reading-progress" aria-hidden="true"></div>
+<main id="main" class="writing-shell">
+  <header class="article-hero">
+    <nav class="article-breadcrumb" aria-label="面包屑"><a href="../../">首页</a><span aria-hidden="true">/</span><a href="../">实践与思考</a><span aria-hidden="true">/</span><span>正文</span></nav>
+    <div class="article-heading">
+      <p class="eyebrow">AI 工程实践 / 数据治理</p>
+      <h1><span class="article-title-context">Excel → AI 数据清洗</span>仍需避免制造新形式的<span class="article-title-term">“数据债务”</span></h1>
+      <div class="article-meta"><span class="article-author">龙秉君 · Bingjun Long</span><span>约 16 分钟阅读</span><span>中文</span></div>
+    </div>
+  </header>
+  <div class="article-layout">
+    <aside class="article-toc" aria-label="文章目录">
+      <details open><summary>文章目录 / CONTENTS</summary><nav aria-label="文章章节"><a class="toc-level-2" href="#observations">1. 观察</a>
+<a class="toc-level-3" href="#data-processing">1.1 数据加工现状</a>
+<a class="toc-level-3" href="#ai-boundaries">1.2 AI 的能力与边界</a>
+<a class="toc-level-3" href="#organizational-capability">1.3 从个人提效到组织能力</a>
+<a class="toc-level-2" href="#reflections">2. 思考</a>
+<a class="toc-level-3" href="#project-tiers">2.1 项目分级</a>
+<a class="toc-level-3" href="#engineering-practices">2.2 工程规范</a>
+<a class="toc-level-3" href="#collaboration">2.3 组织协作</a>
+<a class="toc-level-3" href="#support-and-incentives">2.4 支持与激励</a>
+<a class="toc-level-4" href="#project-support">2.4.1 基础支持</a>
+<a class="toc-level-4" href="#evaluation">2.4.2 评价与激励</a>
+<a class="toc-level-2" href="#conclusion">小结</a></nav></details>
+      <a class="toc-back" href="../">← 全部文章</a>
+    </aside>
+    <article class="article-body" aria-label="Excel → AI 数据清洗仍需避免制造新形式的“数据债务”">
+<blockquote><p>本文源于一段本人的数据加工实践，讨论 AI 辅助数据清洗中的正确性、可维护性与交接问题。文中的工程模板是个人提出的实践建议，其效果仍需结合具体任务验证。</p>
+</blockquote>
+<h2 id="observations">1. 观察</h2>
+<h3 id="data-processing">1.1 数据加工现状</h3>
+<p>公司处于快速增长阶段时，业务扩张速度往往快于管理工具、流程和规范的更新速度。数据、文档和处理规则随业务不断增加，却未能及时完成统一整理。借用热力学中“熵增”的概念，这也可以被理解为组织成长过程中的一种“熵增”：短期内，它可能是为了支持高速发展而被容忍的副作用，但如果企业希望面向未来建设更稳定的数据基础，就需要逐步降低信息混乱和规则不一致。</p>
+<p>当数据从源系统导出后，还需要经过多次人工加工或跨团队传递，才能形成最终分析结果时，流程的复杂度便不只取决于数据量，也取决于加工环节和协作方式。这类流程在任务规模较小时可能满足需求，但随着数据量和协作范围扩大，以下问题可能逐渐显现。</p>
+<ol><li>数据量增加会直接放大人工处理的工作量；</li><li>手工加工excel难以完全避免失误，错误不仅会造成返工，也可能影响后续分析与决策；</li><li>信息传递效率低<ol><li>跨团队协作时，为了对齐指标口径和保持规则一致，还需要付出较高的沟通成本。如果前序生产者不了解使用者的实际需求，产出的数据可能无法直接使用，使用者只得再次加工，形成重复劳动。</li><li>许多处理逻辑和业务背景只存在于个人经验中。新成员接手工作时，需要反复向原负责人确认字段含义、异常情况和处理方式，知识传递高度依赖个人。这不仅延长了学习过程，也持续占用原负责人的时间。</li></ol>
+</li></ol>
+<h3 id="ai-boundaries">1.2 AI降低了数据加工门槛，但没有解决正确性与治理问题</h3>
+<p>AI Coding 降低了代码生成和工具开发的门槛。过去依赖手工 Excel 完成的重复工作，现在可以被转化为脚本、看板或web工具，业务背景和处理规则也可以沉淀为md文档。</p>
+<p>但是需要区分<b>代码能够运行、处理过程能够复现，以及业务结果正确，并不是同一件事。</b>需要注意的是：</p>
+<ol><li><b>AI Coding融入数据加工过程 ≠ 数据治理。</b>将处理逻辑写成代码，只能提高执行的一致性和可复现性，不能证明业务规则正确，判断仍然需要人类。</li><li><b>开发门槛降低 ≠ 治理成本降低。</b>如果企业只鼓励快速制作工具，却没有同步建立项目规范，过去散落在共享盘中的混乱 Excel，可能会变成更多缺乏维护的脚本、html 文件、BI 看板和小型数据库。它们看起来更“数字化”，但如果没有明确这列数据清洗项目的规范（e.g. 数据来源、业务口径、维护责任），这些工具在短期内解决了个人问题，却未必能够被他人理解、接手和长期使用，甚至可能形成新的数据债务。</li></ol>
+<p>Web 开发模板可以降低工具搭建和架构选型的门槛，几乎已经能满足非科班出身人员进行开发架构选型。但是对于数据清洗项目而言，目前并没有相应的工程架构规范，不少自行探索使用ai提效数据清洗人员在没有经过培训之前，更多的是想象自己通过模糊描述就能让AI产出满足需求的结果。对于缺乏开发经验的业务人员而言，仅仅获得AI工具，并不意味着能够自然完成任务拆解、模块设计、规则沉淀和结果验证。</p>
+<p>在数据标准和公共数据能力尚未完善的场景中，AI 介入数据清洗我认为更像是标准数据基础逐步成熟前的一种过渡能力。但是AI介入数据清洗后，需要解决的不只是“如何更快地生成解决问题的代码”，还包括两个更基础的问题：</p>
+<ol><li>哪些数据任务适合通过AI进行自动化，应该采用多重的治理方式；</li><li>一个需要重复运行或长期使用的数据清洗项目，应该如何描述、验证、变更和交接。</li></ol>
+<p>这两个问题分别对应后文的<a href="#project-tiers">数据项目分级</a>和<a href="#engineering-practices">项目工程规范</a>。但即使项目分级和工程规范已经明确，个人提效也不会自动转化为组织能力，毕竟需要合适的制度设计和人自主执行。员工是否愿意投入时间学习和沉淀规则，公司如何评价AI产出，以及有限资源应该如何配置，仍然是AI落地过程中需要解决的组织问题。</p>
+<h3 id="organizational-capability">1.3 从个人提效转化为组织能力仍面临困难</h3>
+<p>目前，AI在数据加工中的应用还面临几个问题：</p>
+<ol><li><b>职能部门的AI应用价值短期难衡量。</b>对于职能部门而言，AI带来的价值通常不直接表现为收入增长，而更多体现为节省工时、降低错误、缩短流程和减少经营风险。这类收益较为间接，难以在短期内被准确衡量。随着公司对AI投入从广泛探索转向关注实际产出，Token、培训和技术支持等资源也会受到更严格的评价。</li><li><b>当前部分AI应用主要停留在个人提效层面，未成为可供组织长期使用的数字资产。</b>员工借助AI完成了数据清洗脚本或小型工具，但如果缺少数据来源、业务口径、质量验证和维护责任记录，这些成果就难以被他人接手和长期复用。个人节省了时间，并不意味着组织同步获得了知识沉淀和流程优化。</li><li><b>员工需要投入时间学习且学习热情需要被支持。</b>从未使用AI到能够独立改造工作流，本身存在一定的学习和验证成本。员工需要投入时间拆解任务、表达业务规则、核对结果并处理异常。如果这部分投入完全由个人承担，而提效成果在评价和资源分配中不可见，仅依赖员工兴趣很难形成持续、广泛的参与。</li><li><b>AI适用场景需要达成共识。</b>AI也并非适用于所有数据加工任务。当任务重复发生、规则相对稳定、输入输出明确、处理环节可以拆分、结果能够验证且风险可控时，更适合通过人机协作实现自动化；如果任务高度依赖专业判断、规则频繁变化、数据较为敏感或错误影响较大，则仍需数据和IT团队介入。</li></ol>
+<p>所以公司需要解决的不只是“是否鼓励员工使用AI”，而是如何将个人探索逐步转化为可治理的组织能力。这可能包括三个层面：</p>
+<ol><li>在项目层面，对不同数据任务进行分级，并建立与其价值和风险相匹配的工程规范；（见<a href="#project-tiers">2.1</a>-<a href="#engineering-practices">2.2</a>）</li><li>在业务协作层面，让业务人员通过真实数据、处理规则和结果样本，更完整地表达需求；（见<a href="#collaboration">2.3</a>）</li><li>在组织管理层面，为初次尝试提供必要的进入条件，并对产生真实价值和知识沉淀的项目给予资源与激励。（见<a href="#support-and-incentives">2.4</a>）</li></ol>
+<h2 id="reflections">2. 思考</h2>
+<h3 id="project-tiers">2.1 数据项目等级划分</h3>
+<p>首先，并不是所有 Excel 工作都值得被开发成长期系统。一次性数据分析、部门内重复任务和跨团队长期使用的数据产品，对数据的规范、存储和运维的要求不同。</p>
+<p>在选择技术方案之前，需要判断项目特征：</p>
+<ol><li><b>项目需求</b>：项目解决什么问题、使用频率、使用范围、是否可能跨团队复用</li><li><b>生命周期</b>：项目是临时、试点还是长期使用，以及何时复核、迁移或下线</li><li><b>责任</b>：谁定义口径、谁负责验收和维护</li><li><b>数据特征</b>：数据来源稳定性（原始数据/加工后的数据）、数据血缘、数据量规模和增长趋势、是否需要保留历史数据版本。</li><li><b>技术运行方面</b>：任务是离线批处理还是实时查询，数据的访问控制是单人使用还是多人并发</li></ol>
+<p>对此可以有三类不同的处理方案：</p>
+<p>1.一次性任务采用轻量代码，需求方自行定义开发；</p>
+<p>2.需要重复运行的工作采用标准项目模板；--&gt;<a href="#engineering-practices">“2.2 具体的数据清洗项目工程规范”</a></p>
+<p>3.长期、多人使用或影响关键决策的项目，需数据和 IT 团队进介入，帮助建立数据规范、存储和后续运维。</p>
+<h3 id="engineering-practices">2.2 具体的数据清洗项目工程规范</h3>
+<p>不同业务的数据清洗逻辑不可能完全一致。项目如何描述、执行、验证、变更和交接更值得统一。</p>
+<p>目前已有的 BI 或 Web 开发框架，能够帮助没有开发经验的员工快速制作和部署工具；但对于更常见的数据清洗任务，新手未必具备拆分加工环节、沉淀业务规则和设置质量检查的意识。项目即使短期运行成功，其正确性、可维护性和可交接性仍可能存在问题。</p>
+<p>业务、数据和 IT 团队可以共同制定一套轻量模板供参考。</p>
+<p><b>关于xx的案例：</b>我在清洗过程中对项目各个环节进行解耦设计，并且考虑到了使用方并没有代码经验，所以做了简单的人机交互设计——即告诉ai该数据任务的周期性，要求进行输入输出的不同周期隔离，且按照我已经建立的目录框架之下设计 user friendly的交互模式。</p>
+<p>对于其中处理规则已经明确、需要按月重复运行的模块，用户可以通过 AI Agent 的对话入口获取输入准备指引并发起执行。交互方式可以概括为：</p>
+<figure class="article-example article-dialogue"><figcaption>交互示例</figcaption><pre tabindex="0" aria-label="用户与 AI 的对话示例"><code>用户： “我现在要计算xx月的数据，请问需要做什么”---&gt;
+AI ：你需要上传xxxx表到xx文件夹或者上传到对话框，我检查上传没有缺少之后执行........several minutes 执行完毕之后告诉用户在哪里查看结果或者直接汇报结果。
+用户：（开心打开产出结果）</code></pre></figure>
+<figure class="article-example"><figcaption>项目目录示例</figcaption><pre tabindex="0" aria-label="项目目录结构，可横向滚动"><code>project/
+├─ README.md
+├─ input/       关于input和output的环节 采用下面的方式
+│  ├─ 第1个环节_xxx/
+│  |  ├─ 202606/      周期性数据需要隔离
+│  └─ 第2个环节_xxx/
+│  |  ├─ YYYYMM/
+·······
+├─ output/
+│  ├─ 第1个环节_xxx/
+│  |  ├─ YYYYMM/
+··········
+│  └─ final/
+├─ scripts/         主要数据清洗代码文件
+├─ config/     可以结构化表达的映射、分类和阈值，应沉淀到配置文件中，以便程序读取和后续调整。
+├─ docs/  人类阅读入口和维护的主要地址
+│  ├─ 业务背景.md
+│  ├─ 业务处理逻辑.md
+│  ├─ 数据字典.md
+│  ├─ 异常记录.md
+│  └─ 业务变更记录.md
+├─ tests/
+├─ agent/ 面向agent
+│  ├─ AGENTS.md
+     面向Agent 的工作协议，规定开始任务前必须阅读哪些文件、
+     哪些原始数据和核心规则不可修改、允许操作哪些目录、
+     修改后必须执行哪些测试，
+     以及遇到不确定的业务判断时何时请求人工确认。
+│  └─ CHANGELOG.md   </code></pre></figure>
+<p>这样的规范并不是数据清洗的目的，而是希望通过这样的形式将：</p>
+<ol><li><b>开发模块化：</b>每个模块的输入、输出和上下游依赖明确，让加工模块呈现“高内聚，低耦合”的特征，减少模块间由于逻辑变动带来的影响；</li><li><b>考虑人类可读性和可维护性： </b>需要和 agent 操作空间进行隔离。考虑业务规则和项目变更可以追溯。</li><li><b>规范agent和人的工作范围。</b></li></ol>
+<h3 id="collaboration">2.3 组织协作模式的可能变化</h3>
+<p>AI不仅改变了开发方式，同时也改变了业务需求的表达方式</p>
+<p>传统的信息化建设通常从业务提出需求开始，再由数据和IT团队理解业务背景、确认数据口径并完成技术实现。但在实际沟通中，业务人员脑中的字段含义、处理规则和异常判断很难通过一次需求描述完整传递。双方往往需要经过多轮沟通和结果验证，才能逐步还原真正的业务需求。</p>
+<p>AI Coding为这一过程提供了另一种可能的范式。对于业务人员每月重复使用的数据，业务可以先借助AI完成初步的数据清洗和加工原型。在这个阶段，代码不一定符合长期运行的工程标准，但项目中沉淀的数据源、字段定义、异常案例、预期输出和验收样本，对后续的数据与IT建设具有重要价值。</p>
+<p>所以老生常谈的<b> 数据治理其实并不等于 IT 治理，在AI 加持下也并不等于业务完全IT化</b>。业务自助开发不应被理解为将全部技术责任转移给业务，也不意味着数据和IT团队只需接收业务写出的代码。更像是把传统的“业务提需求”范围扩大：业务不再只提供一段文字描述，而是通过真实数据和处理原型，将自己的需求表达得更加结构化、具体化和可验证。</p>
+<p>在这个过程中，三方的职责也会发生变化：</p>
+<ol><li>业务人员负责解释业务背景，通过原型明确数据来源、字段含义、处理逻辑、异常情况和预期结果；</li><li>数据团队负责识别其中可以标准化和跨项目复用的定义、规则与数据模型，并判断哪些内容应进入公共数据层；</li><li>IT团队负责评估权限、安全、基础设施、系统集成和长期运行要求，并对需要部署的项目进行工程改造。</li></ol>
+<p>业务自主开发的原型最终不一定都要变成正式系统。对于使用范围较小、风险较低的项目，可以继续由业务按照轻量规范维护；对于重复运行、多人使用或影响重要决策的项目，则需要由数据和IT团队评估其是否应被规范化改造，或者沉淀为公共数据能力；对于已经失去价值的项目，则应及时下线。</p>
+<p>从这个角度看，业务侧的AI数据清洗项目既是提效工具，也可以成为未来信息化建设的需求入口。它的主要价值未必是直接复用业务人员生成的代码，而是减少业务知识在跨团队传递中的损耗，为后续的数据标准、数据模型和系统功能提供更加真实的输入。</p>
+<h3 id="support-and-incentives">2.4 在资源收紧下，需要为AI提效建立支持和激励机制</h3>
+<p>业务人员使用AI提效，主要动力仍然来自减少个人重复劳动以及对新工具的兴趣。公司层面若尚未形成明确的激励机制，会产生一个现实问题：员工需要自行承担学习、试错、规则整理和结果验证的成本，但项目带来的效率改善、知识沉淀和长期复用价值更多由组织获得。如果这部分投入在评价和资源分配中不可见，仅依靠个人热情很难形成长期持续和扩大。</p>
+<p>与此同时，公司对AI资源投入已经从广泛探索转向关注实际产出，不适合继续依赖无差别的额度支持或大范围通用培训。因此，组织既需要为尚未使用AI的员工保留低成本的进入通道，也需要把更深入的资源和激励集中到真实、有价值且能够验证的工作流上。</p>
+<h4 id="project-support">2.4.1 关于AI的使用可以考虑以下两类项目基础支持</h4>
+<ol><li><b>提供工具+case指引：</b>为员工提供低成本的基础条件，除了ai工具、token额度外还需要标准项目模板和公司内部的成功数据清洗案例。目的是让员工通过类比识别可以用AI提效的机会和具备完成第一次尝试的条件。</li><li><b>培训应当从通用工具介绍转向岗位工作流</b>。代码小白进行数据清洗的真正困难通常是不知道自己的哪些工作的哪些部分适合AI化，也不知道如何拆分输入、输出、业务规则。因此，可以围绕月度数据合并、字段映射、数据核对和固定报表等真实任务，提供案例、答疑和辅导。</li></ol>
+<p>当员工识别出明确场景后，可以通过项目制获得进一步支持。项目只需说明当前人工流程、预期改善、数据风险和验收方式，公司再据此提供有限的增量额度、技术评审、试点时间或部署资源，并根据结果决定继续投入、调整还是停止。</p>
+<h4 id="evaluation">2.4.2 项目评价和激励</h4>
+<p>项目评价不应只看Token使用量、工具数量或是否上线，还应考察是否减少工时和错误、缩短交付周期、支持他人接手，以及是否沉淀了可复用的数据规则。对于第一次尝试者，可以侧重其是否完成了工作流拆解和有效验证。对于成熟项目，则进一步评价稳定运行、复用范围和维护成本。</p>
+<p>但评价指标本身还不足以形成激励。组织还需要承认员工在探索、文档整理和质量验证上的投入，例如为试点预留一定的时间和token花费，将经过验证的流程改善、知识沉淀和跨团队复用纳入评价/认可，并让节省出来的时间真正转向更高价值的工作。如果提效只意味着员工获得更多任务，或者规范建设在绩效中完全不可见，员工就缺乏主动公开和推广提效成果的动力。</p>
+<p>因此，激励的目标不应是要求所有人使用AI，也不应追求表面的AI使用率，而是降低第一次有效尝试的成本，并让创造真实业务改善、完成规范沉淀和推动成果复用的人获得可感知的资源与认可。</p>
+<h2 id="conclusion">小结</h2>
+<p>AI降低了业务人员使用代码处理数据的门槛，但工具能够运行并不意味着结果正确，也不意味着个人提效已经转化为组织能力。缺少项目分级、工程规范、业务规则沉淀和维护责任，AI甚至可能将原有的Excel混乱转化为新的数据债务。</p>
+<p>因此，AI数据清洗的落地不能只依靠员工个人探索，还需要从项目、协作和组织三个层面共同推进：</p>
+<ul><li>根据价值和风险对项目分级，建立可复用、可验证的工程规范；</li><li>让业务、数据和IT团队形成更高效的协作方式；</li><li>同时通过基础支持、项目评价和激励机制，让真正产生业务改善和知识沉淀的实践能够持续发展。</li></ul>
+
+      <footer class="article-end"><a href="../">← 返回实践与思考</a><a href="../../#contact">交流你的想法 →</a></footer>
+    </article>
+  </div>
+</main>
+<footer class="site-footer writing-shell"><span>© <span id="year">2026</span> Bingjun Long</span><span>认真做事，也认真生活。</span><a href="#top">回到顶部 ↑</a></footer>
+</body>
+</html>

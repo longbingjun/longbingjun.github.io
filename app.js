@@ -11,12 +11,30 @@
     }
   };
   Object.assign(strings.zh, {
+    erpData:'比赛数据', erpAnalysis:'销售与利润', erpDecision:'经营决策',
+    erpDataNote:'销售 · 库存', erpAnalysisNote:'趋势 · 偏好', erpDecisionNote:'定价 · 分配',
+    navWriting:'实践与思考',
+    writingTitle:'实践与思考',
+    allWriting:'浏览全部文章',
+    writingCategory:'AI 工程实践 · 数据治理',
+    writingLanguage:'中文文章',
+    writingSummary:'代码能够运行、处理过程能够复现，以及业务结果正确，并不是同一件事。从数据加工实践出发，思考项目分级、工程规范与组织协作。',
+    readWriting:'阅读全文',
     basketballText:'写代码时认真，打篮球也一样。换上 9 号球衣，给好奇心放个课间。',
     cheer:'给 9 号加油',
     cheered:'9 号收到！下一球，继续加油。',
     basketballAlt:'秉君身穿红色 9 号篮球服，抱着篮球挥手'
   });
   Object.assign(strings.en, {
+    erpData:'Data', erpAnalysis:'Analysis', erpDecision:'Actions',
+    erpDataNote:'Sales · Stock', erpAnalysisNote:'Trends · Profit', erpDecisionNote:'Price · Stock',
+    navWriting:'Writing',
+    writingTitle:'Notes from practice.',
+    allWriting:'All writing',
+    writingCategory:'AI engineering · Data governance',
+    writingLanguage:'Written in Chinese',
+    writingSummary:'Working code, reproducible processes and correct business results are different things. Reflections on project tiers, engineering practices and collaboration in AI-assisted data cleaning.',
+    readWriting:'Read article in Chinese',
     basketballText:'Focused on code. Just as focused on basketball. Jersey number 9 is my way to give curiosity a little recess.',
     cheer:'Cheer for number 9',
     cheered:'Number 9 heard you. On to the next play!',
@@ -38,17 +56,41 @@
   const hobbyDialog = $('#basketball-dialog');
 
   function projectVisual(id) {
+    if(id === 'erpsim') return `<div class="visual-eyebrow">DATA → BUSINESS DECISIONS</div><div class="erp-flow"><div class="erp-step"><span>01</span><strong>${t('erpData')}</strong><small>${t('erpDataNote')}</small></div><span class="erp-arrow">→</span><div class="erp-step"><span>02</span><strong>${t('erpAnalysis')}</strong><small>${t('erpAnalysisNote')}</small></div><span class="erp-arrow">→</span><div class="erp-step"><span>03</span><strong>${t('erpDecision')}</strong><small>${t('erpDecisionNote')}</small></div></div>`;
     if(id === 'evidence') return '<div class="visual-eyebrow">EVIDENCE → KNOWLEDGE</div><div class="evidence-graph" aria-hidden="true"><div class="graph-node"><strong>Source</strong><span>text + video</span></div><span class="graph-edge">→</span><div class="graph-node main"><strong>Evidence</strong><span>verify + trace</span></div><span class="graph-edge">→</span><div class="graph-node"><strong>Insight</strong><span>linked data</span></div></div>';
     if(id === 'clv') return '<div class="visual-eyebrow">THE CUSTOMER LIFECYCLE</div><div class="lifecycle" aria-hidden="true"><div class="life-block"><b>01</b><span>ACQUIRE</span></div><div class="life-block"><b>02</b><span>RETAIN</span></div><div class="life-block"><b>03</b><span>GROW</span></div></div>';
     if(id === 'bank') return '<div class="visual-eyebrow">PREDICT. THEN UNDERSTAND.</div><div class="bank-equation" aria-hidden="true"><div class="bank-features"><span>channel</span><span>history</span><span>context</span></div><span class="graph-edge">→</span><div class="model-chip"><strong>LightGBM</strong><span>+ SHAP explainability</span></div></div>';
     return '<div class="visual-eyebrow">SMALLER BUDGET. BETTER QUESTIONS.</div><div class="reasoning-block" aria-hidden="true"><div>reasoning_experiment.py</div><p><em>strategy</em> = <b>"LoRA"</b><br><em>temperature</em> = 0.6<br><em>evaluate</em>(quality, compute)</p></div>';
   }
 
+  function projectType(p) {
+    const category = PORTFOLIO.categories[p.categoryId];
+    return `<span class="project-category">${escape(pick(category))}</span><span class="project-context">· ${escape(pick(p.context))}</span>`;
+  }
+
   function renderProjects() {
     $('#project-grid').innerHTML = PORTFOLIO.projects.map(p => {
-      const metric = p.id === 'evidence' ? p.metrics[0] : p.id === 'clv' ? p.metrics[1] : p.metrics[2];
-      const demo = safeURL(p.demoPageUrl);
-      return `<article class="project-card"><div class="project-visual visual-${p.id}" aria-hidden="true">${projectVisual(p.id)}</div><div class="project-card-body"><p class="project-type">${escape(pick(p.type))}</p><h3>${escape(pick(p.title))}</h3><p class="project-subtitle">${escape(pick(p.subtitle))}</p><p class="project-summary">${escape(pick(p.summary))}</p><div class="project-tags">${p.tags.map(tag=>`<span>${escape(tag)}</span>`).join('')}</div><div class="project-card-footer"><span class="project-outcome"><b>${escape(lang === 'en' && metric.valueEn ? metric.valueEn : metric.value)}</b> ${escape(pick(metric.label))}</span><div class="project-card-actions">${demo?`<a class="project-demo-link" href="${escape(demo)}" aria-label="${escape(t('demoCard') + ': ' + pick(p.subtitle))}"><span aria-hidden="true">▶</span>${t('demoCard')}</a>`:''}<button class="project-detail-button" data-project="${p.id}" aria-label="${escape(t('detailButton') + ': ' + pick(p.subtitle))}">${t('detailButton')} <span aria-hidden="true">↗</span></button></div></div></div></article>`;
+      const metric = p.metrics[p.highlightMetricIndex ?? 0];
+      const demo = safeURL(p.demoPageUrl), github = safeURL(p.githubUrl);
+      return `<article class="project-card${p.featured ? ' project-card-featured' : ''}" data-project-id="${escape(p.id)}">
+        <div class="project-visual visual-${escape(p.id)}" aria-hidden="true">${projectVisual(p.id)}</div>
+        <div class="project-card-body">
+          <p class="project-type">${projectType(p)}</p>
+          <h3>${escape(pick(p.title))}</h3>
+          <p class="project-subtitle">${escape(pick(p.subtitle))}</p>
+          ${p.meta ? `<p class="project-meta">${escape(pick(p.meta))}</p>` : ''}
+          <p class="project-summary">${escape(pick(p.summary))}</p>
+          <div class="project-tags">${p.tags.map(tag => `<span>${escape(pick(tag))}</span>`).join('')}</div>
+          <div class="project-card-footer">
+            <span class="project-outcome"><b>${escape(lang === 'en' && metric.valueEn ? metric.valueEn : metric.value)}</b> ${escape(pick(metric.label))}</span>
+            <div class="project-card-actions">
+              ${demo ? `<a class="project-demo-link" href="${escape(demo)}" aria-label="${escape(t('demoCard') + ': ' + pick(p.subtitle))}"><span aria-hidden="true">▶</span>${t('demoCard')}</a>` : ''}
+              ${github ? `<a class="project-github-link" href="${escape(github)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(t('viewCode') + ': ' + pick(p.subtitle))}">GitHub <span aria-hidden="true">↗</span></a>` : ''}
+              <button class="project-detail-button" data-project="${escape(p.id)}" aria-label="${escape(t('detailButton') + ': ' + pick(p.subtitle))}">${t('detailButton')} <span aria-hidden="true">↗</span></button>
+            </div>
+          </div>
+        </div>
+      </article>`;
     }).join('');
   }
   function safeURL(value, video=false) {
@@ -59,7 +101,7 @@
     const p = PORTFOLIO.projects.find(item=>item.id===activeProject);
     if(!p) return;
     const github=safeURL(p.githubUrl), video=safeURL(p.videoUrl,true), demo=safeURL(p.demoPageUrl), poster=video&&p.videoPoster?safeURL(p.videoPoster):null;
-    $('#project-detail').innerHTML = `<h2 class="dialog-title" id="detail-title">${escape(pick(p.title))}</h2><p class="dialog-subtitle">${escape(pick(p.subtitle))}</p><div class="detail-metrics">${p.metrics.map(m=>`<div><strong>${escape(lang==='en'&&m.valueEn?m.valueEn:m.value)}</strong><span>${escape(pick(m.label))}</span></div>`).join('')}</div>${p.details.map(d=>`<section class="detail-section"><h3>${escape(pick(d.title))}</h3><p>${escape(pick(d.text))}</p></section>`).join('')}${video?`<video class="project-video" src="${escape(video)}"${poster?` poster="${escape(poster)}"`:''} controls preload="none" playsinline aria-label="${escape(pick(p.subtitle))}"></video>`:p.id==='evidence'?`<div class="video-placeholder"><strong>${t('videoTitle')}</strong><p>${t('videoText')}</p></div>`:''}${demo?`<a class="button primary project-repo" href="${escape(demo)}">${t('demoPage')} ↗</a>`:''}${github?`<a class="button primary project-repo" href="${escape(github)}" target="_blank" rel="noopener noreferrer">${t('viewCode')} ↗</a>`:''}<p class="detail-note">${escape(pick(p.note))}</p>`;
+    $('#project-detail').innerHTML = `<p class="project-type project-detail-type">${projectType(p)}</p><h2 class="dialog-title" id="detail-title">${escape(pick(p.title))}</h2><p class="dialog-subtitle">${escape(pick(p.subtitle))}</p>${p.meta?`<p class="project-meta">${escape(pick(p.meta))}</p>`:''}<div class="detail-metrics${p.metrics.length === 2 ? ' detail-metrics-pair' : ''}">${p.metrics.map(m=>`<div><strong>${escape(lang==='en'&&m.valueEn?m.valueEn:m.value)}</strong><span>${escape(pick(m.label))}</span></div>`).join('')}</div>${p.details.map(d=>`<section class="detail-section"><h3>${escape(pick(d.title))}</h3><p>${escape(pick(d.text))}</p></section>`).join('')}${video?`<video class="project-video" src="${escape(video)}"${poster?` poster="${escape(poster)}"`:''} controls preload="none" playsinline aria-label="${escape(pick(p.subtitle))}"></video>`:p.id==='evidence'?`<div class="video-placeholder"><strong>${t('videoTitle')}</strong><p>${t('videoText')}</p></div>`:''}${demo?`<a class="button primary project-repo" href="${escape(demo)}">${t('demoPage')} ↗</a>`:''}${github?`<a class="button primary project-repo" href="${escape(github)}" target="_blank" rel="noopener noreferrer">${t('viewCode')} ↗</a>`:''}<p class="detail-note">${escape(pick(p.note))}</p>`;
     projectDialog.setAttribute('aria-labelledby','detail-title');
   }
   function themeLabels() {

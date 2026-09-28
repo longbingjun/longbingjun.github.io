@@ -1,0 +1,130 @@
+/* Reading pages and the homepage writing preview share the portfolio palette. */
+html.reading-document { scroll-padding-top: 0; }
+.site-header nav a[aria-current="page"] { color: var(--blue); }
+.site-header nav a[aria-current="page"]::after { width: 100%; }
+.writing-section { padding-top: 35px; padding-bottom: 90px; }
+.writing-section .section-heading > .text-link { color: var(--blue); }
+.writing-preview { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 48px; border-block: 1px solid var(--line); padding-block: 38px; }
+.writing-preview-label { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.writing-preview-label > p { font-size: 14px; color: var(--muted); }
+.writing-language { font-size: 13px; color: var(--muted); }
+.writing-preview-copy { max-width: 800px; }
+.writing-preview h2, .writing-preview h3 { font-size: 24px; line-height: 1.55; letter-spacing: 0; font-weight: 650; }
+.writing-preview h2 a:hover, .writing-preview h3 a:hover { color: var(--blue); }
+.writing-preview-copy > p { color: var(--muted); margin-top: 17px; font-size: 16px; line-height: 1.9; }
+.writing-read { font-size: 15px; color: var(--blue); margin-top: 23px; min-height: 44px; }
+
+.writing-page { --reading-width: 760px; }
+.writing-shell { max-width: 1232px; padding-inline: 56px; margin-inline: auto; }
+.writing-page .site-header { border-bottom: 1px solid var(--line); }
+.writing-page .header-controls { min-width: 85px; justify-content: flex-end; }
+.writing-home { color: var(--muted); font-size: 14px; }
+.writing-home:hover { color: var(--blue); }
+.writing-index { min-height: calc(100vh - 190px); padding-top: 72px; padding-bottom: 110px; }
+.writing-index-header { max-width: 690px; margin-bottom: 65px; }
+.writing-index h1 { font-size: 40px; letter-spacing: -.5px; line-height: 1.25; margin: 22px 0; }
+.writing-index-header > p:last-child { font-size: 18px; line-height: 1.9; color: var(--muted); }
+.writing-index .writing-preview { padding-block: 38px 46px; }
+.article-hero { padding-top: 42px; padding-bottom: 42px; border-bottom: 1px solid var(--line); }
+.article-breadcrumb { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--muted); margin-bottom: 40px; }
+.article-breadcrumb a { padding-block: 5px; }
+.article-breadcrumb a:hover { color: var(--blue); }
+.article-heading { max-width: 940px; }
+.article-heading > .eyebrow { color: var(--blue); }
+.article-heading h1 { font-size: 40px; font-weight: 700; letter-spacing: -.5px; line-height: 1.5; text-wrap: balance; margin: 20px 0 26px; }
+.article-title-context { display: block; font-size: 24px; font-weight: 600; letter-spacing: -.5px; margin-bottom: 10px; }
+.article-title-term { white-space: nowrap; }
+.article-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; color: var(--muted); font-size: 14px; }
+.article-author { color: var(--ink); }
+.article-layout { display: grid; grid-template-columns: 232px minmax(0, var(--reading-width)); gap: 64px; align-items: start; padding-top: 46px; padding-bottom: 70px; }
+.article-toc { position: sticky; top: 28px; max-height: calc(100dvh - 56px); overflow-y: auto; overscroll-behavior: contain; font-size: 14px; scrollbar-width: thin; }
+.article-toc summary { color: var(--muted); font-size: 14px; letter-spacing: .8px; cursor: pointer; padding: 8px 0 16px; }
+.article-toc nav { border-left: 1px solid var(--line); padding-block: 2px; }
+.article-toc a { display: block; color: var(--muted); padding: 7px 13px; line-height: 1.6; border-left: 2px solid transparent; margin-left: -1px; }
+.article-toc a.toc-level-3 { padding-left: 23px; }
+.article-toc a.toc-level-4 { padding-left: 34px; font-size: 13px; }
+.article-toc a:hover, .article-toc a[aria-current="location"] { color: var(--blue); background: var(--blue-soft); border-left-color: var(--blue); }
+.article-toc .toc-back { margin-top: 18px; color: var(--blue); border-left: 0; }
+.article-body { min-width: 0; font-size: 18px; line-height: 1.8; overflow-wrap: break-word; }
+.article-body p { font-size: inherit; margin-block: 18px; }
+.article-body h2, .article-body h3, .article-body h4 { scroll-margin-top: 28px; text-wrap: pretty; }
+.article-body h2 { font-size: 28px; line-height: 1.5; margin: 60px 0 26px; padding-top: 32px; border-top: 1px solid var(--line); letter-spacing: -.5px; }
+.article-body h3 { font-size: 22px; line-height: 1.65; margin: 38px 0 16px; }
+.article-body h4 { font-size: 18px; line-height: 1.75; margin: 30px 0 14px; }
+.article-body > blockquote + h2 { margin-top: 36px; border-top: 0; padding-top: 0; }
+.article-body strong, .article-body b { font-weight: 650; color: var(--ink); }
+.article-body blockquote { margin: 0 0 30px; padding: 4px 22px; border-left: 3px solid var(--blue); background: var(--blue-soft); border-radius: 0 8px 8px 0; }
+.article-body blockquote p { font-size: 16px; line-height: 1.8; margin-block: 15px; }
+.article-body ol, .article-body ul { padding-left: 1.55em; margin-block: 20px 26px; }
+.article-body li { padding-left: .25em; margin-block: 12px; }
+.article-body li::marker { color: var(--blue); font-weight: 600; }
+.article-body li > ol, .article-body li > ul { margin-block: 12px; }
+.article-body ol ol { list-style-type: lower-alpha; }
+.article-body a { color: var(--blue); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--blue) 40%, transparent); text-underline-offset: 4px; }
+.article-body a:hover { text-decoration-color: var(--blue); }
+.article-example { margin: 28px 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.article-example figcaption { font-size: 13px; font-weight: 600; color: var(--muted); padding: 11px 20px; background: var(--blue-soft); border-bottom: 1px solid var(--line); }
+.article-example pre { margin: 0; padding: 22px; overflow: auto; max-width: 100%; font: 14px/1.8 Consolas, "SFMono-Regular", "Microsoft YaHei", monospace; tab-size: 2; scrollbar-width: thin; }
+.article-example pre:focus-visible { outline: 2px solid var(--blue); outline-offset: -3px; }
+.article-example code { font: inherit; }
+.article-dialogue pre { white-space: pre-wrap; overflow-wrap: anywhere; font-family: inherit; font-size: 16px; }
+.article-end { margin-top: 52px; padding-top: 28px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.article-end a { font-size: 14px; }
+.reading-progress { position: fixed; inset: 0 auto auto 0; height: 3px; width: 100%; transform: scaleX(0); transform-origin: left; z-index: 50; background: var(--blue); pointer-events: none; }
+
+@media (max-width: 1050px) {
+  .writing-shell { padding-inline: 36px; }
+  .article-layout { grid-template-columns: 190px minmax(0, 1fr); gap: 36px; }
+  .writing-preview { grid-template-columns: 175px minmax(0, 1fr); gap: 32px; }
+}
+@media (max-width: 760px) {
+  /* Keep the new section reachable on phones, including with JavaScript disabled. */
+  .site-header { height: auto; min-height: 112px; flex-wrap: wrap; row-gap: 0; padding-top: 15px; padding-bottom: 0; }
+  .site-header > nav { display: flex; order: 3; width: 100%; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); margin-top: 12px; font-size: 14px; }
+  .site-header > nav a { min-height: 44px; display: inline-flex; align-items: center; white-space: nowrap; }
+  .site-header > nav a::after { bottom: 0; }
+  .writing-section { padding-top: 22px; padding-bottom: 50px; }
+  .writing-section .section-heading { display: flex; align-items: flex-end; gap: 16px; }
+  .writing-section .section-heading .text-link { font-size: 14px; white-space: nowrap; }
+  .writing-preview { grid-template-columns: minmax(0, 1fr); gap: 19px; padding-block: 26px; }
+  .writing-preview-label { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+  .writing-preview-label .eyebrow { flex-basis: 100%; }
+  .writing-preview h2, .writing-preview h3 { font-size: 22px; }
+  .writing-preview-copy > p { font-size: 16px; margin-top: 13px; }
+  .writing-read { margin-top: 12px; }
+  .writing-shell { padding-inline: 22px; }
+  .writing-index { padding-top: 45px; padding-bottom: 65px; }
+  .writing-index-header { margin-bottom: 36px; }
+  .writing-index h1 { font-size: 32px; }
+  .writing-index-header > p:last-child { font-size: 16px; }
+  .article-hero { padding-top: 24px; padding-bottom: 30px; }
+  .article-breadcrumb { margin-bottom: 25px; }
+  .article-heading h1 { font-size: 28px; letter-spacing: 0; margin: 16px 0 22px; }
+  .article-title-context { font-size: 20px; }
+  .article-meta { gap: 8px 17px; font-size: 13px; }
+  .article-layout { grid-template-columns: minmax(0, 1fr); gap: 26px; padding-top: 24px; padding-bottom: 45px; }
+  .article-toc { position: static; font-size: 15px; max-height: none; padding: 3px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+  .article-toc summary { padding-block: 12px; }
+  .article-toc nav { margin-bottom: 14px; }
+  .article-toc a { padding-block: 10px; }
+  .article-toc a.toc-level-4 { font-size: 14px; }
+  .article-toc .toc-back { display: none; }
+  .article-body { font-size: 17px; line-height: 1.8; }
+  .article-body h2 { font-size: 24px; margin-top: 42px; padding-top: 25px; }
+  .article-body h3 { font-size: 20px; margin-top: 32px; }
+  .article-body blockquote { padding-inline: 16px; }
+  .article-example { margin-inline: 0; }
+  .article-example pre { padding: 17px; font-size: 14px; }
+  .article-dialogue pre { font-size: 16px; }
+  .article-end { flex-wrap: wrap; }
+}
+@media print {
+  .writing-page { background: white; color: black; }
+  .writing-page .site-header, .article-toc, .reading-progress, .article-breadcrumb, .article-end, .writing-page .site-footer { display: none; }
+  .writing-shell { padding: 0; max-width: none; }
+  .article-layout { display: block; }
+  .article-body { font-size: 11pt; line-height: 1.7; }
+  .article-body h2, .article-body h3, .article-body h4 { break-after: avoid; }
+  .article-example pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 9pt; }
+  .article-heading h1 { font-size: 25pt; }
+}
